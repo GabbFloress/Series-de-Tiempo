@@ -1,0 +1,21 @@
+#################### CLASE 01 FEBRERO 2017 ############################
+
+temporal <- tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/regulares/enoe/microdatos/enoe_15ymas/2016/2016trim1_dbf.zip", temporal)
+files =unzip(temporal, list=TRUE)$Name 
+unzip(temporal, files=files[grepl("dbf", files)])
+
+install.packages("foreign")
+require(foreign)
+SDEMT116 <- data.frame(read.dbf("sdemt116.dbf"))
+
+####################### EJERCICIO FILA 3 #############################
+
+temporal <- tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/modulos/motral/2015/microdatos/motral2015_bases_datos_dbf.zip", temporal)
+files =unzip(temporal, list=TRUE)$Name 
+unzip(temporal, files=files[grepl("dbf", files)])
+
+install.packages("foreign")
+require(foreign)
+MOTRAL2015 <- data.frame(read.dbf("motral2015_empleos.dbf"))
