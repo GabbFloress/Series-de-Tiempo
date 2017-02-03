@@ -1,0 +1,62 @@
+Series de tiempo (ST)
+
+Los modelos de ST son útiles cuando se tienen datos correlacionados en serie. 
+Este tipo de modelos se usan principalmente para realizar pronósticvos y predicciones
+Para las series de tiempo se necesitan datos que basados en el tiempo como:
+años, días, horas, minutos y segundos.
+ 
+Una ST es una secuencia de observaciones medidas en determinados momentos del tiempo 
+ordenados cronológicamente y espaciados entre sí de manera uniforme, así los datos
+son dependientes entre sí.
+
+El objetivo de una ST es realizar un pronóstico a través del modelaje de los datos.
+
+Ejemplos de ST
+
+- Número de habitantes por año
+- PIB anual
+- Índices de precio del pretróleo 
+- Número de accidentes de carro semanal
+- Precio de venta de acciones de la BMV diario
+
+
+## Componentes de una ST
+
+El análisis de ST está basado en el supuesto de que los valores observados son 
+consecuancia de tres componentes:
+  
+  a) Tendencia: se define como un cambio a largo plazo en relación a los valores
+                observados. La tendencia se identifica gráficamente con un 
+                movimiento suave de la serie a largo plazo.
+
+  b) Estacional: Algunas ST presentan cierta peridiocidad o variaciones en
+                 cierto periodo de tiempo, a esta serie se le conoce como 
+                 estacionaria. Por ejemplo: 
+                   - Las ventas de flores aumentan considerablemente en el mes de mayo.
+                   - Las ventas de juguetes se incrementan en el mes de diciembre y 
+                     enero.
+                     
+  c) Aleatorio: Estas ST no responden ningún patrón de comportamiento si no que, 
+                se deriva de fenómenos aleatorios que impactan de manera aislada 
+                a una ST. 
+                
+                
+# Clasificación de las ST
+                
+    Las ST se pueden clasificar en:
+       1) Estacionarias: una ST se conoce como estacionaria cuando la media y
+                         la varianza son constantes en el tiempo.
+       2) No estacionarias: una ST se considera no estacionaria cuando la tendencia
+                            o variabilidad cambien en el tiempo.
+                
+                            
+ #####################33
+                            
+data("AirPassengers")
+class(AirPassengers)
+start(AirPassengers) #Año del primer dato
+end(AirPassengers) #Año del último dato
+frequency(AirPassengers) #(12) datos mensuales
+summary(AirPassengers) #Resumen estadístico 
+plot(AirPassengers, col="red", type="h") #Tendencia a la alza
+abline(mean(AirPassengers))
