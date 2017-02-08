@@ -1,0 +1,20 @@
+pob <- sample(100:120,15,replace = F)
+pobts <- ts(pob,frequency = 1,start = 2000) #1 si es anual
+end(pobts) #Cuando termina la serie de tiempo
+start(pobts) #Cuando empieza
+plot(aggregate(pobts)) #Graficar la ST
+plot(pobts)
+infor <- ts(read.csv("C:\\Users\\SALA-D32\\Desktop\\TIL.csv"),
+           frequency = 4,start = 2005)
+infor
+
+plot(infor)
+#Descargar 4 series de tiempo
+#http://www3.inegi.org.mx/Sistemas/infoenoe/Default_CONAPO.aspx?s=est&c=27736
+
+
+var <- data.frame(read.csv("C:\\Users\\SALA-D32\\Desktop\\variables.csv"))
+desocupacion <- ts(var[,1],frequency = 4, start = 2005) #Solo puedes llamar 1 serie a la vez
+ocupacionparcial <- ts(var[,2],frequency = 4, start = 2005) 
+trabajo asalariado <- ts(var[,3],frequency = 4, start = 2005) 
+concriticas <- ts(var[,4],frequency = 4, start = 2005) 
