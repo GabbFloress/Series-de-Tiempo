@@ -1,0 +1,92 @@
+################################################################################################
+
+Características de una serie de tiempo(ST):
+
+1) Tendencia
+2) Estacionalidad
+3) Aleatoriedad
+
+El objetivo del análisis de una ST es modelar la serie y predecir sus valores futuros.
+
+Las observaciones de una serie de tiempo tienden a estar correlacionadas y el análisis 
+de una ST está dirigido en explicar esta correlación.
+
+Para explicar la correlacion en las observaciones de una ST se tiene que modelar la ST 
+y ajustar los datos con la finalidad de realizar pronósticos o simulaciones para orientar 
+decisiones políticas, económicas, etc.
+
+### Ejemplo: Determinar las ventas futuras de un producto con la finalidad de planear 
+la producción.
+
+Un requisito para poder aplicar un modelo a una ST es que los datos deben de estar completos
+y se deben cumplir diversos requisitos de los modelos
+
+############### Ajuste de modelos de una ST
+
+Se define una serie de tiempo de n periodos como {x_t, t=1,2,...,n}={x_1,x_2,...,x_n} 
+esto consiste en n valores en timpo discreto.
+
+Ejemplo:
+Tenemos una ST del valor del petróleo en 4 periodos.
+x_t = Valor del petróleo
+x_1 = $45 
+x_2 = $55 
+x_3 = $40 
+x_4 = $57
+
+Una vez que definimos una ST lo primero que tenemos que hacer es graficar con la 
+finalidad de conocer el comportamiento de los datos que pueden ser:
+
+### Tendencia
+### Estacionalidad
+### Aleatoriedad
+
+Una vez que se analiza la gráfica se elige un modelo que permita ajustar lo datos de esta ST
+
+|
+|       _/
+|      / 
+|    _                            TENDENCIA
+|   / 
+|  /
+|---------------------------
+
+|
+|         
+|   /\   / \   /\  /
+|  /  \_/   \_/  \/               ESTACIONALIDAD
+|    
+|  
+|---------------------------
+
+|
+|   _     _ 
+|   \ \   \ \
+|    \ \_  \ \_                   ALEATORIEDAD
+|    /   \_/    \
+|  _/
+|---------------------------
+
+(También se pueden combinar)
+
+Para generar un modelo de una ST, la serie se tiene que expresar como una función con 3 elementos:
+
+m_t -> Tendencia -> (Efecto tendencia)
+S_t -> Estacionalidad -> (Efecto estacional)
+e_t -> Error -> (Efecto aleatoriedad)
+
+Los modelos que mas se utilizan con el aditivo y multiplicativo
+
+################ Modelo aditivo ################
+
+x_t = m_t + S_t + e_t
+
+################ Modelo multiplicativo ################
+
+Puro -> m_t * S_t * e_t
+Mixto -> m_t * S_t + e_t
+
+La elección del modelo que se va a utilizar para la ST varía dependiendo de las 
+caractersticas que se observan en la gráfica.
+
+Por ejemplo: Si tenemos una ST estacional con tendencia se aplica el modelo aditivo
