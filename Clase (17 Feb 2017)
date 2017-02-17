@@ -1,0 +1,41 @@
+desoc <- sample(3:8,44,replace = T)
+tdesoc <- ts(desoc, frequency = 4,start = 2005)
+x11()
+plot(decompose(tdesoc)) #Descompone la serie de tiempo en sus componenetes
+#1.- Datos observados
+#2.- Tendencia (suaviza la grafica)
+#3.- Estacionalidad
+#4.- Aleatoriedad/Error
+plot(tdesoc)
+# en este modelo tenemos tendencia y estacionalidad no constante,, el ideal es el modelo multiplicativo
+tiie <- read.csv("C://Users//SALA-D32//Desktop//baseT.csv")
+STtiie <- ts(tiie,frequency = 52,start = 2005)
+plot(STtiie)
+plot(decompose(STtiie)) #No tiene estacionalidad y tendencia
+pib <- read.csv("C://Users//SALA-D32//Desktop//basePIB.csv")
+TSpib <- ts(pib,frequency = 4,start = c(2007,1))
+plot(TSpib)
+plot(decompose(TSpib)) # Tenemos tendencia, estacionalidad y aleatoriedad
+summary(TSpib)
+depib <- decompose(TSpib)
+depib
+names(depib) #Elementos de una serie de tiempo!!
+depib$trend #Datos asociados a la tendencia
+depib$seasonal
+
+desoc <- read.csv("C://Users//SALA-D32//Desktop//baseDesocup.csv")
+tsdesoc <- ts(desoc,frequency = 4,start=2005)
+plot(TSdesoc)
+plot(decompose(TSdesoc)) 
+
+#La Tasa de desocupacion aumenta notoriamente en el 2008 debido a la crisis de los creditos suprime (hipotecas), 
+#que afecto gravemente al PIB nacional y al tipo de cambio (devaluación del peso frente al dólar),
+#provocando un aumento en la tasa de desocupacion, y se establece en el segundo trimestre de 2011 
+#y sigue teniendo aleatoriedad.
+
+decomposedesoc <- decompose(TSdesoc)
+names(decomposedesoc)
+decomposedesoc$seasonal 
+#Muestra estacionalidad en todo el intervalo
+decomposedesoc$trend 
+#Incremento importante en el 2008, de 2011 a 2015 se mantiene y después decrementa
