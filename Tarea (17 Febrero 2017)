@@ -1,0 +1,9 @@
+
+##### Serie de tiempo con tendencia y estacionalidad
+
+### PIB México
+## Datos mensuales de Enero de 2007 a Enero de 2017
+
+PIB <- ts(read.csv("C://Users//FLORES//Desktop//PIB México.csv"), frequency = 12, start = (2007))
+
+plot(PIB, main ="Serie de tiempo PIB México", xlab = "Años", ylab = "PIB", col = "red", pch = 17)
