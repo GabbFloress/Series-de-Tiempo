@@ -1,0 +1,37 @@
+
+
+u1 <- (1:10)
+for(i in 1:10) {
+  u1[i]<- u1[i]+2
+  print(u1[i])
+}
+u1
+
+s <- 7
+while(s<6) {s <- s*2; print (s);}
+
+s <-1
+while (s<5) {s <-s+1; ; if(s == 4) break; print(s);}
+
+s <- 1
+while (s<5) {s <-0+1; ; if(s == 2) break; print(s);}
+# Corre todos los valores porque no encuentra el 2
+
+s <- 2
+while (s<3) {s <- s+1; ; if(s ==3) break; print(s);}
+
+
+
+des <- read.csv("C://Users//SALA-D32//Documents//desocupacion.csv")
+
+tsdes <- ts(des,frequency = 4,start = 2005)
+detsdes <- decompose (tsdes)
+detsdes$trend
+detsdes$seasonal
+plot(tsdes, col="blue", main="Tasa de desocupacion trimestral", ylab="Tasas", xlab="Años")
+lines (detsdes$trend, col="red", ylab="Tendencia")
+monthplot(detsdes$seasonal, main="IVEc",ylab="IVEc trimestral")
+
+#Tarea para el lunes
+#Encontrar una ST con tendencia a la alza y que la estacionalidad tambien se incremente
+#Aplicar el moldeo multiplicativo y graficar tendencia
