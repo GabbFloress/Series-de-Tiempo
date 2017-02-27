@@ -1,0 +1,10 @@
+tipocambio <- read.csv("F://TS tipo cambio.csv")
+
+TStipocambio <- ts(tipocambio,frequency = 12, start = 2015)
+deTStc <- decompose (TStipocambio)
+deTStc$trend
+deTStc$seasonal
+
+plot(deTStc, col="blue", main = "Tipo de cambio mensual", ylab="Tipo cambio", xlab="Años")
+lines (deTStc$trend, col="red", ylab="Tendencia")
+monthplot(deTStc$seasonal, main="IVEc",ylab="IVEc trimestral")
