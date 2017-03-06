@@ -1,0 +1,25 @@
+#El momento de picos y caídas es predecible con los datos estacionales
+#pero impredecible a largo plazo con datos cíclicos
+
+install.packages("fpp")
+require(fpp)
+
+plot(window(elec,start=1980), ylab="Gwh", xlab = "year",main = "Australian electricity production")
+
+#ESTACIONARIEDAD,TENDENCIA,CICLICO
+
+plot(bricksq, ylab="million units", xlab="year", main="Australian clay brick production")
+#ESTACIONARIEDAD Y CICLICO, NO TENDENCIA
+plot(hsales, main="Sales of new one-family houses, USA", ylab="Total sales", xlab="year")
+
+#NO ESTACIONARIEDAD, NI TENDENCIA, POSIBLE CICLO
+
+seasonplot(elec, s=12, year.labels= TRUE, main="Electricidad", ylab = "Año", col = rainbow(20),year.labels.left=TRUE,pch=15)
+seasonplot(bricksq, s=12, year.labels= F, main="Sales of new one-family houses", ylab = "Año", col = rainbow(20),year.labels.left=TRUE,pch=15)
+seasonplot(hsales, s=12, year.labels= F, main="Valor acciones ICA", ylab = "Año", col = rainbow(20),year.labels.left=TRUE,pch=15)
+
+dec<-decompose(bricksq)
+sinesta<-bricksq-dec$seasonal
+sintend<-bricksq-dec$trend
+plot(sinesta)
+plot(sintend)
