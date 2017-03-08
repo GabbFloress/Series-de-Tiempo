@@ -1,0 +1,45 @@
+## Descomponer en modelo aditivo
+
+desoc <- data.frame(read.csv("Ruta"))
+
+desocTS <- ts(desoc, frequency = 4, start = 2005)
+
+plot (desocTS)
+
+### Añadir al final
+lines (eeadj, col = "darkcyan")
+###
+
+
+dectTSD <- descompose(desocTS)
+
+dectTSDMul <- descompose(desocTS, type = "mult")
+
+# Graficamos los 2 modelos
+
+plot (dectTSD)
+plot (dectTSDMul)
+
+## Desestacionalizar una serie
+
+# Se desestacionaliza una serie para poder predecir los datos con mayor
+# precisión y sin contar con factores externos al comportamiento de nuestros
+# datos, dos elementos que permiten desentralizar una serie
+
+require(fpp)
+
+eeadj <- seasonadj (dectTSD)
+eeadj
+plot (eeadj)
+
+SinEstacionalidad <- desocTS - dectTSD
+SinEstacionalidad
+
+
+## Para comprobar...
+
+eeadj - SinEstacionalidad  
+
+### Debe dar una matriz de ceros.
+
+
