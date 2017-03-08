@@ -22,7 +22,7 @@ PIBM <- window(PIB, start = 2000, end = 2015)
 plot(PIBM, main = "Crecimiento anual del PIB México de 2000 a 2015",
      xlab = "Año", ylab = "Crecimiento Porcentual", col = "darkgrey", lwd = 3)
 
-#help(segments)
+#help(segments) función que utiliza Rodrigo para marcar los ciclos :)
 segments(2001, -5 , 2001, 5 ,  col = "orange", lty = 4, lwd = 3)
 segments(2009, -5, 2009, 5 ,  col = "red", lty = 4, lwd = 3)
 segments(2013, -5, 2013, 5 ,  col = "darkcyan", lty = 4, lwd = 3)
