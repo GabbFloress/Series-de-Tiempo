@@ -1,0 +1,84 @@
+Una ST se considera un caso particular de un proceso estocastico.
+En terminos generales un proceso estocastico se define como una serie de datos que presentan cambios a traves del tiempo.
+
+Analisis de la estacionalidad.
+
+SUPUESTO: Considerese que el proceso estocastico ha generado un proceso estacionario
+
+La estacionalidad se presenta e dos formas:
+
+1.- Estacionariedad en sentido estricto: se produce cuando la funcion de distribucion de un proceso estocastico $ F(Yt)=F(Y(t+k)) 
+∀ t,k $
+permanece invariante con respecto al tiempo.
+
+2.- Estacionariedad en sentido amplio: se produce cuando la funcion de distribucion de un proceso estocastico permanece invariante 
+con respecto al tiempo en sus dos primeros momentos.
+
+La estacionariedad en sentido amplio es la que se utiliza con mayor frecuencia.
+
+  -La estacionariedad en el primer momento refiriendose cuando todas las variables aleatorias que definen el proceso estocastico
+   tienen la misma distribucion y la misma media, es decir E[Yt] = µ, ∀t
+   
+  -Estacionariedad en el segundo momento se refiere cuando todas las variables tienen la misma varianza y ademasla covarianza
+   entre dos variables cualesquiera no depende del tiempo, sino que depende del desfase entre ellas.
+   Por ejemplo: cov(Y1,Y2)=cov(Y5,Y6)
+   
+En general, el desfase o retraso k tiene que cumplir lo siguiente:
+ 
+ cuando:
+ 
+ k=0 , var(Yt) = ƛ0 ∀t
+ k=0 , var(Yt,Y(t-1)) = ƛ1 ∀t
+ k=0 , var(Yt,Y(t-2)) = ƛ2 ∀t
+ 
+ Bajo este supuesto la matriz de varianza-covarianza del proceso vendra dada por
+ 
+                ƛ0   ƛ1    ....   ƛn-1 
+                ƛ1   ƛ0    ƛ1 ...  ƛn-2
+                .
+                .
+                ƛn-1 ƛn-2   .....  ƛ0
+                
+SUPUESTO: Ergodicidad en el segundo momento. Se supone que si n es suficientemente grande no sera necesario estimar los los n 
+componentes de la funcion de autocovarianza ƛ0, ƛ1, ... , ƛn.
+Es decir, a partir de un cierto retardo , k=s los restantes autocovarianzas seran nulas, ƛ(s+1) = ƛ(s+2) = ... = ƛ(n-1) = 0
+
+Este supuesto consiste en que un proceso estocastico la influencia de una variable aleatoria sobre otra muy alejada en el
+tiempo se puede considerar nula. La justificacion se basa en la dependencia temporal.
+Aunque las variables aleatorias que componen un proceso estocastico son distintas, las caracteristicas que resumen estas 
+variables aleatorias en momentos proximos del tiempo se espera que sean similares.
+
+Por ejemplo:
+La covarianza entre dos variables el PIB de octubre y noviembre de 2006 es de esperar que sea distinto a cero, debido a que entre esas
+dos fechas la situacion economica tiene pocos cambios.
+En contrate, si tenemos los datos del PIB de enero de 2007 y julio del 2015 es de suponer que existe poca relacion, por lo que 
+esperamos una covarianza nula.
+
+Por lo tanto, se supondra que una serie de tiempo es generada por un proceso estocastico cuando:
+1.- La funcion de distribucion esta caracterizada por sus dos primeros momentos.
+2.- Son estacionarios en esos dos primeros momemtos.
+3.- Son ergódicos
+
+La familia de procesos estocásticos que cumplen esas tres propiedades y que son lineales son:
+1.- Procesos autorregresivos (AR)
+2.- Procesos medias moviles (MA)
+3.- Procesos mixtos (ARMA)
+
+En resumen se define un proceso estocastico estacionario con base en dos elementos:
+1.- Media y varianza constante en el tiempo
+2.- La covarianza entre dos periodos depende del retraso o desfase entre este periodo -> ergodico
+
+Entonces:
+Sea Yt una ST
+1.- E[Yt] = E[Y(t+k)]
+2.- Var[Yt] = Var[Y(t+k)]
+3.- Yk = E[Y(t-µ)Y(t+k-µ)]
+
+Recordando:
+Covarianza y correlacion son medias que generan el grado de relacion lineal entre dos variables.
+Autovarianza y autocorrelacion son medidas de relacion linal entre los valores retardados de una sT
+Por ejemplo:
+Se mide la relacion entre Yt y Y(t-1)
+                          Yt y Y(t-2)
+En muchos casos pera eliminar la estacionariedad y la tendencia necesitamos conocer la correlacion de las variables para realizar
+mejores pronosticos de la ST
