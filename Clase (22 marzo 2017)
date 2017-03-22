@@ -1,0 +1,43 @@
+desocupacion <- read.cvs("")
+pib <- rear.cvs("")
+pibTS <- ts(pib)
+desocupTS <- ts(desocupacion)
+
+acf(pibTS) #Graficar el correlograma
+acf(desocupTS)
+
+####################################################
+################# MÈTODO INGENUO ###################
+####################################################
+
+# (se basa en la ùltima observaciòn)
+
+install.packages ("forecast")
+require(forecast)
+
+# naive(serie de tiempo, h = nùmero de pronòsticos)
+naive(pibTS, h = 4)
+
+# Hi -> intervalos de confianza
+
+####################################################
+################# MÈTODO PROMEDIO ##################
+####################################################
+
+# (Todas las observaciones tienen la misma importancia, el pronòstico es un promedio de las observaicones)
+
+meanf(desocupTS, h = 4)
+
+plot (meanf(desocupTS, h = 4))
+
+# Esto sirve para la imputaciòn
+
+##############################################################
+################# MÈTODO INGENUO ESTACIONAL ##################
+##############################################################
+
+# Se utiliza en series de tiempo con alta estacionalidad, se le da mayor peso/ponderaciòn_ 
+# al dato del mismo periodo en el año anterior.
+
+snaive (desocupTS, h = 4)
+
