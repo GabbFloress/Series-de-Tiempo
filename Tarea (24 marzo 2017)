@@ -1,0 +1,10 @@
+##### Serie de tiempo Ruido Blanco #######
+
+
+walmex <- read.csv("C://Users//FLORES//Desktop//Acciones.csv")
+
+walmexTS <- ts(walmex, frequency = 12, start = 2015)
+
+plot(walmexTS)
+acf(walmexTS,main= "Ruido Blanco", xlab="Año", ylab="Acción") #Graficar el correlograma
+
