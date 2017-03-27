@@ -1,0 +1,31 @@
+asa <- read.csv("C://Users//SALA-D32//Downloads//IndicadoresENOE_2017-03-27.csv")
+
+asa1 <- t( data.frame
+          (read.csv("C://Users//SALA-D32//Downloads//IndicadoresENOE_2017-03-27.csv",
+                    header = T)[7, 2:49]))
+asa <- ts(asa1)
+asa <- as.numeric(asa)
+asat <- ts(asa1, start=2005, frequency = 4)
+
+
+####################### Modelo suavizado exponencial en R ####################### 
+install.packages("forecast")
+require (forecast)
+
+mod1 <-  ses (asat, alpha=.1, intitial ="simple", h=8)
+mod2 <-  ses (asat, alpha=.3, intitial ="simple", h=8)
+mod3 <-  ses (asat, alpha=.95, h=8) # el pronóstico que mejor se ajusta a los datos observados
+
+x11()
+plot (mod1, ylab="Asalariados", xlab = "Años", main= "Asalariados", type ="o")
+lines(mod1$fitted, col="brown", type = "o") 
+lines(mod2$fitted, col="red", type = "o")
+lines(mod3$fitted, col="green", type = "o")
+
+lines(mod1$mean, col="brown", type = "o") 
+lines(mod2$mean, col="red", type = "o")
+lines(mod3$mean, col="green", type = "o")
+
+leggend ("topleft", lty=1, col=c(1, "blue", "red","green"),
+         c("datos", expression(alpha==0.1), expression(alpha==.3),
+           expression(alpha==.95), pch=64)
