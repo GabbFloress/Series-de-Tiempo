@@ -1,0 +1,87 @@
+### Ejercicio bajar acciones de ICA, NETFLIX, TELEVISA Y TVAZTECA diario #####
+
+# Ejercicio de cierre 2016 
+
+# Ajustar 4 modelos de suavizado exponencial simple (alpha = .2, .4, .6, .8)
+
+# Graficarlos en una sola gráfica
+
+# Con la gráfica decidir cuál de los 4 es el mejor ajuste que tiene 
+# una vez que hayan decidido gráficamente el mejor ajuste, aplicar la evaluación
+# de los ajustes y utilizar las medidas MAE y RMSE extryéndolas de tal forma
+# que creen un vector que compare estas medidas y este vector indique que 
+# alpha es la mejor
+
+tvazteca <- read.csv("C://Users//SALA-D32//Desktop//TVAZTECA.csv", header = F)
+
+AztecaTS <- ts(tvazteca, frequency = 252, start = 2016)
+
+
+####################### Modelo suavizado exponencial en R ####################### 
+install.packages("forecast")
+require (forecast)
+
+mod1 <-  ses (AztecaTS, alpha=.2, intitial ="simple", h=8)
+mod2 <-  ses (AztecaTS, alpha=.4, intitial ="simple", h=8)
+mod3 <-  ses (AztecaTS, alpha=.6, intitial ="simple", h=8)
+mod4 <-  ses (AztecaTS, alpha=.8, intitial ="simple", h=8)
+
+# el pronóstico que mejor se ajusta a los datos observados: alpha = 0.
+
+x11()
+plot (mod1, ylab="Acción", xlab = "Tiempo", main= "TV AZTECA", type ="l")
+lines(mod1$fitted, col="cyan", type = "l") 
+lines(mod2$fitted, col="red", type = "l")
+lines(mod3$fitted, col="green", type = "l")
+lines(mod4$fitted, col="blue", type = "l")
+
+lines(mod1$mean, col="cyan", type = "l") 
+lines(mod2$mean, col="red", type = "l")
+lines(mod3$mean, col="green", type = "l")
+lines(mod4$mean, col="blue", type = "l")
+
+leggend ("topleft", lty=1, col=c(1, "cyan", "red","green", "blue"),
+         c("datos", expression(alpha==0.2), expression(alpha==0.4),
+           expression(alpha==0.6), expression(alpha==0.8), pch=17)
+##mod 1
+a1 <- AztecaTS - mod1$fitted
+mean(abs(a1)) #MAE:0.1108978
+sqrt(mean(a1^2)) #RMSE: 0.14918
+evalm1<-accuracy(mod1)
+evalm1
+
+##mod 2
+a2 <- AztecaTS - mod2$fitted
+mean(abs(a2)) #MAE : 0.07535541
+sqrt(mean(a2^2)) #RMSE: 0.1109998
+evalm2<-accuracy(mod2)
+evalm2 
+
+##mod 3
+a3<- AztecaTS - mod3$fitted
+mean(abs(a3)) #MAE: 0.0627564
+sqrt(mean(a3^2)) #RMSE: 0.09940375
+evalm3<-accuracy(mod3)
+evalm3 
+
+##mod 4
+a4 <- AztecaTS - mod4$fitted
+mean(abs(a4)) #MAE: 0.05580718
+sqrt(mean(a4^2)) #RMSE: 0.09621696
+evalm4<-accuracy(mod4)
+evalm4
+
+##### se elegiria el modelo 4 por que el MAE se acerca mas a cero y graficamente se acopla mas 
+
+vector <- c(mean(abs(a1)), mean(abs(a2)), mean(abs(a3)), mean(abs(a4)))
+vector
+
+x <-  ifelse ( mean(abs(a1)) < mean(abs(a2)) & mean(abs(a1)) < mean(abs(a3)) & mean(abs(a1)) < mean(abs(a4)), "Modelo 1", 
+      ifelse ( mean(abs(a2)) < mean(abs(a1)) & mean(abs(a2)) < mean(abs(a3)) & mean(abs(a2)) < mean(abs(a4)), "Modelo 2", 
+      ifelse ( mean(abs(a3)) < mean(abs(a1)) & mean(abs(a3)) < mean(abs(a2)) & mean(abs(a3)) < mean(abs(a4)), "Modelo 3",  
+      ifelse ( mean(abs(a4)) < mean(abs(a1)) & mean(abs(a4)) < mean(abs(a2)) & mean(abs(a4)) < mean(abs(a3)), "Modelo 4",0))))
+              
+x
+
+# La serie no tiene tendencia ni estacionalidad, pero piodría presentar dos ciclos: 
+# del dato 59 al 128 y del 158 al 198.
