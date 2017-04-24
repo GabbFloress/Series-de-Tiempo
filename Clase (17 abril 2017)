@@ -1,0 +1,41 @@
+des<-read.csv("C://Users//SALA-D32//Documents//tarea2.csv")
+dests<-ts(des,frequency =4,start=2005 )
+require(fpp)
+mod1<-ses(dests,alpha=.1,initial="simple",h=8)
+mod2<-ses(dests,alpha=.3,initial="simple",h=8)
+mod3<-ses(dests,alpha=.9,initial="simple",h=8)
+mod4<-ses(dests,alpha=.95,initial="simple",h=8)
+plot(mod1,ylab = "tasa ")
+lines(fitted(mod1),col="green",type="o")
+lines(fitted(mod2),col="red",type="o")
+lines(fitted(mod3),col="blue",type="o")
+lines(fitted(mod4),col="pink",type="o")
+
+##mod 1
+aa<- dests - mod1$fitted
+mean(abs(aa))####MAE
+sqrt(mean(aa^2))########RMSE
+evalm1<-accuracy(mod1)
+evalm1
+
+##mod 2
+a2<- dests - mod2$fitted
+mean(abs(a2))####MAE
+sqrt(mean(a2^2))########RMSE
+evalm2<-accuracy(mod2)
+evalm2
+
+##mod 3
+a3<- dests - mod3$fitted
+mean(abs(a3))####MAE
+sqrt(mean(a3^2))########RMSE
+evalm3<-accuracy(mod3)
+evalm3
+
+##mod 4
+a4<- dests - mod4$fitted
+mean(abs(a4))####MAE
+sqrt(mean(a4^2))########RMSE
+evalm4<-accuracy(mod4)
+evalm4
+##### se elegiria el modelo 3 por que  el MAE se acerca mas a cero y graficamente se acopla más
