@@ -1,0 +1,75 @@
+###Bajar acciones de Televisa diario, precio de cierre 2016
+televisa<-read.csv("C://Users//SALA-D32//Documents//televisa.csv")
+telets<-ts(televisa, start=2016, frequency = 252)
+###Ajustar 4 modelos de suavizado exponencial simple (alpha=.2,.4,.6,.8)
+require(forecast)
+mod1<-ses(telets, alpha = 0.2, initial = "simple", h=8)
+mod2<-ses(telets, alpha = 0.3, initial = "simple", h=8)
+mod3<-ses(telets, alpha = 0.6,initial = "simple", h=8)
+mod4<-ses(telets, alpha = 0.8,initial = "simple", h=8)
+
+###ANÁLISIS DE RESIDUALES
+##Lo que se va a aanalizar de los residuales es que cumplan con las siguientes propiedades:
+#1) Los residuales no estan correlacionados
+#2)Tienen media cero
+#3)Tienen varianza constante
+#4) Los residuales estan normalmente distribuidos
+
+
+#Para esto en r se tienen que obtener los residuales de cada uno de los 4 modelos 
+#con la finalidad de analizarlos y conocer su comportamiento.
+#Para lo anterior primero vamos a graficar nuestros datos con los valores ajustados para
+#despues extraer los residuales de cada modelo y comenzar el análisis correspondiente
+
+x11()
+plot(mod1,ylab = "Precio de la acción", xlab="meses", main = "Televisa", type ="l" )
+lines(mod1$fitted, col="blue", type="l")
+lines(mod2$fitted, col="red", type="l")
+lines(mod3$fitted, col="green", type="l")
+lines(mod4$fitted, col="orange", type="l")
+
+res1<-residuals(mod1)
+res2<-residuals(mod2)
+res3<-residuals(mod3)
+res4<-residuals(mod4)
+
+plot(res1, ylab = "residuales", xlab = "")
+plot(res2, ylab = "residuales", xlab = "")
+plot(res3, ylab = "residuales", xlab = "")
+plot(res4, ylab = "residuales", xlab = "")
+
+hist(res1, nclass = "FD", main =  "Histograma residuales")
+hist(res2, nclass = "FD", main =  "Histograma residuales")
+hist(res3, nclass = "FD", main =  "Histograma residuales")
+hist(res4, nclass = "FD", main =  "Histograma residuales")
+
+###PRUEBA DE AUTOCORRELACIÓN A LOS RESIDUALES
+#Para analizar las autocorrelaciones hemos utilizado la fn. acf la cual nos muestra
+#un correlograma que nos permite mostrar la relación que existe entre los datos,
+#además se puede utilizar la prueba ljung Box y se utiliza la fn. Box.test que permite
+#conocer la correlación que existe entre los residuales a través de una prueba de hipótesis
+
+#Correlograma de los residuales
+Acf (res1, main="res1")
+Acf (res2, main="res2")
+Acf (res3, main="res3")
+Acf (res4, main="res4")
+
+#ljung box nos permite saber con mayor certeza si existe correlación o no de los residuales
+
+Box.test(res1, lag=10, type= "Lj")
+Box.test(res2, lag=10, type= "Lj")
+Box.test(res3, lag=10, type= "Lj")
+Box.test(res4, lag=10, type= "Lj")
+
+#El estadístico Q de Ljung Box prueba la hipótesis nula de las autocorrelaciones de hasta
+#un desfase k son iguales a cero, es decir, los valores de los datos son aleatorios e
+#independientes hasta un cierto número de desfases. Si el LQB es mayor que un valor critico especificado,
+#las autocorrelaciones para 1 o más desfases podrían ser estadísticamente significativas
+#diferentes de cero, lo que indicaría que los valores no son aleatorios ni independientes.
+
+#Las etapas para un análisis de residuales son:
+#1. Elegir el modelo a través de las medidas MAE y RMSE
+#2. Realizar las pruebas de los residuales de normalidad, independencia y varianza constante
+#una vez que las pruebas son viables ya se puede elegir el modelo como opción a considerar 
+#para realizar los pronósticos necesarios.
