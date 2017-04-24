@@ -1,0 +1,111 @@
+#0<\alpha,\beta^*<1
+#Holt lineal simple
+
+#l_{t} estima el nivel de la ST, es el peso ponderado de la observación yt
+#b_{t} denota la tendencia, es un peso ponderado de la estimación de la tendencia
+#B*T es el parámetro se suavizamiento para la tendencia
+#Ec. pronóstico
+#ygorro{t+h|t}=l_{t}+hb_{t}
+#Ec. nivel
+#$$ l_{t}=\alpha*y_{t}+(1-\alpha)(l_{t-1}+b_{t-1})$$
+#Ec. tendecia
+#$$b_{t}=B^*(l_{t}-l_{t-1})+(1-B^*)b_{t-1}
+
+#Holt lineal exponencial
+
+#Ec. pronóstico
+#ygorro{t+h|t}=l_{t}(b_{t})^h
+#Ec. nivel
+#$$ l_{t}=\alpha*y_{t}+(1-\alpha)(l_{t-1}b_{t-1})$$ #Esta impactada por el alpha
+#Ec. tendecia
+#$$b_{t}=B^*(l_{t}/l_{t-1})+(1-B^*)b_{t-1} #Impactado por el beta
+
+#Modelo: Tendencia aditiva amortiguado
+
+#Permite ser mas flexible en la escuación de la tendencia
+#Ec. pronóstico
+#ygorro{t+h|t}=l_{t}(O+O^2+...+O^h)b_{t}
+#Ec. nivel
+#$$ l_{t}=\alpha*y_{t}+(1-\alpha)(l_{t-1}+Ob_{t-1})$$
+#Ec. tendecia
+#$$b_{t}=B^*(l_{t}-l_{t-1})+(1-B^*)Ob_{t-1}
+#0<O<1
+
+#Modelo multiplicativo amortiguado
+
+#Este método produce menos pronósticos conservadores que el método de holt lineal
+#Ec. pronóstico
+#ygorro_{t+h|t}=l_{t}(b_{t})^(O+O^2+...+O^h)b_{t}
+#Ec. nivel
+#$$ l_{t}=\alpha*y_{t}+(1-\alpha)l_{t-1}(b_{t-1})^O$$
+#Ec. tendecia
+#$$b_{t}=B^*(l_{t}/l_{t-1})+(1-B^*)(b_{t-1})^O
+
+################################# Código en R #################################
+
+des<-read.csv("C://Users//SALA-D32//Documents//tarea2.csv")
+dests<-ts(des,frequency =4,start=2005 )
+#### Holt lineal, es para tendencia constante
+require(fpp)
+mod1 <- holt(dests,alpha = .8,beta = .2,initial = "simple",h=5)
+
+####Holt exponencial, tendencia en incremento o decremento
+mod2 <- holt(dests,alpha = .8,beta = .2,initial = "simple",exponential = T,h=5)
+#los métodos anteriores sirven para hacer predicciones a corto plazo
+
+####Mortiguado aditivo
+#Permite ser más flexible en la escuación de la tendencia
+mod2 <- holt(dests,damped = T)#En este caso se dejo que R calculara a y b
+
+####Mortiguado multiplicativo
+#Permite ser más flexible en la escuación de la tendencia
+mod2 <- holt(dests,damped = T,exponential = T)#En este caso se dejo que R calculara a y b
+
+#Ejericico: 
+#2 ST con tendencia (tendencia creciente y decreciente)
+#contar en el 80% de los datos
+#Graficar los 4 métodos y pronosticar el 20% restante de los datos
+
+telegramas <- ts(read.csv("C://Users//SALA-D32//Documents//Telegramas.csv"),frequency = 1,start = 1959)
+plot(telegramas) #Volumen de telegramas expedidos
+carbon <- ts(read.csv("C://Users//SALA-D32//Documents//mineria.csv")[,1],frequency = 1,start = 1891)
+plot(carbon) #Producción de carbón 
+
+#Cortando series de tiempo en un 80% de los datos
+telecortadats <- ts(read.csv("C://Users//SALA-D32//Documents//Telegramas.csv")[1:32,1],frequency = 1,start = 1959)
+carboncortado <- ts(read.csv("C://Users//SALA-D32//Documents//mineria.csv")[1:98,1],frequency = 1,start = 1891)
+
+#### Creando los modelos
+require(fpp)
+#Holt lineal
+mod1 <- holt(telecortadats,initial = "simple",h=8)
+mod1.1 <- holt(carboncortado,initial = "simple",h=25)
+
+#Holt exponencial
+mod2 <- holt(telecortadats,initial = "simple",h=8,exponential = T)
+mod2.1 <- holt(carboncortado,initial = "simple",h=25,exponential = T)
+
+#Amortiguado aditivo
+mod3 <- holt(telecortadats,damped = T,h = 8)
+mod3.1 <- holt(carboncortado,damped = T,h=25)
+
+#Amortiguado multiplicativo
+mod4 <- holt(telecortadats,damped = T,h = 8,exponential = T)
+mod4.1 <- holt(carboncortado,damped = T,h=25,exponential = T)
+
+#Graficando Telegramas
+x11();plot(mod1,main = "Volumen de telegramas expedidos en Mexico
+           1959-1990",xlab="Tiempo",ylab="Volumen")
+lines(telegramas)
+lines(mod2$mean,col="red")
+lines(mod3$mean,col="brown")
+lines(mod4$mean,col="yellow")
+legend("bottomleft",lty=1,col=c("blue","black","red","brown","yellow"),legend = c("Holt lineal", "Datos observados","Holt exponencial","Amortiguado aditivo","Amortiguado multiplicativo"))
+
+#Graficando Carbón
+x11();plot(mod1.1,main = "Producción de carbón en México 1891-2013",xlab="Tiempo",ylab="Produccion")
+lines(carbon)
+lines(mod2.1$mean,col="red")
+lines(mod3.1$mean,col="brown")
+lines(mod4.1$mean,col="yellow")
+legend("topleft",lty=1,col=c("blue","black","red","brown","yellow"),legend = c("Holt lineal","Datos observados","Holt exponencial","Amortiguado aditivo","Amortiguado multiplicativo"))
