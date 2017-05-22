@@ -1,0 +1,25 @@
+ICA <- read.csv("C:\\Users\\FLORES\\Escritorio\\ICA.csv")
+ICAts <- ts(ica, start =c(2016,1), frequency = 252)
+acf(ICAts)
+plot
+
+# Con la función "diff" se obtiene la diferenciación de los datos
+
+diferenciacion <- diff(ICAts)
+diferenciacion
+
+## La diferenciación se obtiene mediante un "for"
+metodo2 <- rep(0,337)
+
+for(i in 1:337)
+{
+  metodo2[i] <- ica[i+1,1] - ica[i,1]
+}
+metodo2
+
+secuencia <- seq(1,337, by=1)
+informe_metodo2 <- cbind(secuencia, metodo2)
+informe_metodo2
+
+comparacion <- cbind( diferenciacion, metodo2)
+comparacion
