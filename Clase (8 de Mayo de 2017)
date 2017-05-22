@@ -1,0 +1,4 @@
+volaris<-read.csv("C://Users//SALA-D32//Documents//volaris.csv")
+volarists<-ts(volaris, frequency = 252, start=2016)
+acf(volarists)
+plot(volarists)
