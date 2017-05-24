@@ -41,5 +41,13 @@ yy3
 
 # con este modelo expresamos:
 
-#Y'''y=.0716(Y'''t-1)-.1527(Y'''t-2)-1.9987(et-1)+.9988(et-2)+et
+#Y'''t=.0716(Y'''t-1)-.1527(Y'''t-2)-1.9987(et-1)+.9988(et-2)+et
+
+##########################################################3
+
+VITROts <- ts(read.csv("C://Users//SALA-D32//Downloads//VITROA.MX.csv"), frequency = 252, start=2016)
+
+zz <- Arima(VITROts, order=c(3,4,0))
+
+#Y'''t=.8710(Y'''t-1)-.3364(Y'''t-2)-.8362(et-1)+.1378(et-2)+et
 
